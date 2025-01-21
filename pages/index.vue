@@ -9,7 +9,7 @@
 <script setup>
 import { useRouter } from 'vue-router';
 const router = useRouter();
-router.push("/dashboard");
+router.push("/login");
 // const loading = ref("");
 // onMounted(() => {
 //   loading.value = "loading";

@@ -1,12 +1,15 @@
 <template>
   <div class="flex min-h-screen">
-    <SomneangpleangNavbar/>
+    <SomneangpleangNavbar v-bind:class="{'hidden': route.name === 'login'}"/>
     <main class="flex-1 p-6 bg-[#f4f4f9]">
-      <div class="">
-        <img src="@/assets/images/icons/user_icon.png" alt="">
-      </div>
       <NuxtPage />
     </main>
   </div>
 </template>
+<script setup>
+import { useRoute } from 'vue-router';
+const route = useRoute();
+
+console.log('Current route:', route.name);
+</script>
 
