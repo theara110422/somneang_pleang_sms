@@ -1,6 +1,6 @@
 <template>
     <!-- <div class="text-red-500"><h1>Dashboard Page</h1></div> -->
-    <div class=" p-24">
+    <div class="p-20">
         <div class="grid grid-cols-3 gap-8">
             <div @click="onPageChange('students/new')" class="cursor-pointer-page">
                 <DashboardSomneangpleangBox  :title="'Register'" :description="'Register User'" :img="adduserIcon"/>

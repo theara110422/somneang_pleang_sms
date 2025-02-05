@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center items-center mt-60">
+    <div class="flex justify-center items-center min-h-screen">
       <div class="flex w-[40%]">
         <!-- Left Section: Logo -->
         <div class="w-[70%] bg-gray-200 p-10 flex flex-col items-center justify-center rounded-l-lg">

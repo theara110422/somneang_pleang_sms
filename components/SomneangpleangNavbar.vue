@@ -1,6 +1,8 @@
 <template>
-  <nav class="bg-[#fffff] w-64">
-    <img src="@/assets/images/logo.png" alt="" />
+  <nav class="bg-[#fffff] w-56">
+    <div class="w-36 m-auto">
+      <img class="w-full" src="@/assets/images/logo.png" alt="" />
+    </div>
     <ul class="text-left text-text-color space-y-6">
       <li
         class="flex justify-center items-center space-x-6 p-2"

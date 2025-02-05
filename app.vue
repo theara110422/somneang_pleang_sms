@@ -13,3 +13,4 @@ const route = useRoute();
 console.log('Current route:', route.name);
 </script>
 
+
