@@ -1,7 +1,8 @@
 <template>
     <div class="bg-gray-100 p-24">
+      <div class=" flex items-center justify-center bg-gray-100 pb-5">
         <div class="w-full bg-white rounded-lg shadow-md p-6">
-        <h1 class="text-lg font-semibold mb-4">All Student</h1>
+        <h1 class="text-lg font-semibold mb-4">Check Attendance</h1>
         <hr class="mb-6" />
         <form >
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -38,7 +39,10 @@
             </div>
         </form>
         </div>
+      </div>
+      
       <div class="w-full bg-white rounded-lg shadow-md p-6">
+        <h1 class="text-2xl font-semibold mb-4">Searching for: <span></span></h1>
         <div class="overflow-x-auto">
           <table class="table-auto w-full border-collapse border border-gray-200">
             <!-- Table Header -->
@@ -72,37 +76,12 @@
                 <th
                   class="px-4 py-2 border border-gray-200 text-left text-sm font-medium text-gray-600"
                 >
-                  Present
+                  Student
                 </th>
                 <th
                   class="px-4 py-2 border border-gray-200 text-left text-sm font-medium text-gray-600"
                 >
-                  Absent
-                </th>
-                <th
-                  class="px-4 py-2 border border-gray-200 text-left text-sm font-medium text-gray-600"
-                >
-                  Permission
-                </th>
-                <th
-                  class="px-4 py-2 border border-gray-200 text-left text-sm font-medium text-gray-600"
-                >
-                  Canceled
-                </th>
-                <th
-                  class="px-4 py-2 border border-gray-200 text-left text-sm font-medium text-gray-600"
-                >
-                  Session
-                </th>
-                <th
-                  class="px-4 py-2 border border-gray-200 text-left text-sm font-medium text-gray-600"
-                >
-                  Renew
-                </th>
-                <th
-                  class="px-4 py-2 border border-gray-200 text-left text-sm font-medium text-gray-600"
-                >
-                  
+                  Action
                 </th>
 
               </tr>
@@ -110,7 +89,7 @@
             <!-- Table Body -->
             <tbody>
               <tr
-                v-for="user in attendent"
+                v-for="user in users"
                 :key="user.id"
                 class="hover:bg-gray-50 transition duration-150"
               >
@@ -132,102 +111,97 @@
                 <td
                   class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
                 >
-                  {{ user.time }}
+                  <select name="" id="time"
+                    class="w-100 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">8:00-9:00am</option>
+                    <option value="">9:00-10:00am</option>
+                    <option value="">10:00-11:00am</option>
+                    <option value="">11:00-12:00am</option>
+                    <option value="">1:00-2:00pm</option>
+                    <option value="">2:00-3:00pm</option>
+                    <option value="">3:00-4:00pm</option>
+                    <option value="">4:00-5:00pm</option>
+                    <option value="">5:00-6:00pm</option>
+                    <option value="">6:00-7:00pm</option>
+                    <option value="">7:00-8:00pm</option>
+                  </select>
                 </td>
                 <td
                   class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
                 >
-                    {{ user.date }}
+                  <input
+                    type="date"
+                    id="date-register"
+                    class="w-100 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
                 </td>
                 <td
                   class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
                 >
-                {{ user.present }}
+                  <select
+                    id="gender"
+                    class="w-100 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">Absent</option>
+                    <option value="Male">Present</option>
+                    <option value="Female">Permission</option>
+                    <option value="Other">Canceled</option>
+                  </select>
                 </td>
                 <td
                   class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
                 >
-                {{ user.absent }}
-                </td>
-                <td
-                  class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
-                >
-                {{ user.permission }}
-                </td>
-                <td
-                  class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
-                >
-                {{ user.canceled }}
-                </td>
-                <td
-                  class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
-                >
-                  {{ user.session }}<span> / 8</span>
-                </td>
-                <td
-                  class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
-                >
-                  <div v-if="user.session == 8">
-                      <button
-                          type="button"
-                          class="m-1 w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          >
-                          Renew
-                      </button>
-                  </div>
-                  <div v-else>
-                      <button
-                          type="button"
-                          class="m-1 w-full bg-slate-300 text-white p-2 rounded-lg hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          >
-                          Renew
-                      </button>
-                  </div>
-                </td>
-                <td
-                  class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
-                >
-                  More
+                  Viewed
                 </td>
               </tr>
             </tbody>
           </table>
+          <div class="flex justify-end w-40">
+            <button
+                type="submit"
+                class="mt-6 m-1 w-full bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+                Cancel
+            </button>
+            <button
+                type="submit"
+                class="mt-6 m-1 w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+                Save
+            </button>
         </div>
-        <div v-if="attendent.length === 0">No students found</div>
+        </div>
+        <div v-if="users.length === 0">No students found</div>
       </div>
     </div>
   </template>
   <script setup>
   import { useRouter } from 'vue-router';
   const router = useRouter();
-
-  const attendent = [
+  const users = [
     {
         id: 2,
-        name: "Emma",
-        teacher : "Tola",
-        time: "4:00-5:00pm",
-        date: "Sat-Sun",
-        present: 6,
-        absent: 1,
-        permission: 1,
-        canceled: 0,
-        session: 7,
-        
-    },
-    {
-        id: 2,
-        name: "Emma",
-        teacher : "Tola",
-        time: "4:00-5:00pm",
-        date: "Sat-Sun",
-        present: 6,
-        absent: 1,
-        permission: 1,
-        canceled: 0,
-        session: 8,
+        name: "Jane Smith",
+        age: 32,
+        gender: "Female",
+        phone: "987-654-3210",
+        registered: "2023-03-15",
+        time: '4:00-5:00pm',
+        teacher: 'Tola',
+        date: 'Mon-Wed'
+    }
+  ]
+  const findTeacher = (find) => {
+    if(teachers.name == find){
         
     }
-  ];
+
+  }
+
+
+
+
+
   </script>
   

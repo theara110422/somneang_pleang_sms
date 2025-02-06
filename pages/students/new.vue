@@ -55,29 +55,6 @@
               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-
-          <!-- Date Register -->
-          <div>
-            <label for="date-register" class="block text-sm font-medium text-gray-700 mb-1">Date Register</label>
-            <input
-              type="date"
-              id="date-register"
-              v-model="formData.dateRegister"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <!-- Empress By -->
-          <div>
-            <label for="empress-by" class="block text-sm font-medium text-gray-700 mb-1">Empress By</label>
-            <input
-              type="text"
-              id="empress-by"
-              v-model="formData.empressBy"
-              placeholder="Enter empress by"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
         </div>
         <h1 class="text-lg font-semibold mb-4 mt-4">Class Information</h1>
         <hr class="mb-6" />
@@ -186,7 +163,7 @@
           <button
             type="submit"
             class="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
+            >
             Submit
           </button>
         </div>
@@ -216,11 +193,13 @@ const formData = reactive({
   classPeriod:'',
   tuitionFee:'',
   dateRegister : '',
-  empressBy : ''
-})
-const date = ref();
-
-
+  empressBy : '',
+  time: '',
+  teacher: '',
+  date: '',
+  session: '',
+});
+const students = ref([]);
 
 const handleSubmit = () => {
   if(!formData.name.trim()) return alert('Please enter name');
@@ -231,5 +210,13 @@ const handleSubmit = () => {
   localStorage.setItem('students', JSON.stringify(storeStudent));
   router.push('/students');
 };
+// const deletedStudent = (index) => {
+//   if(confirm("Are you sure! You want to delete this student?")) {
+//     students.value.splice(index, 1);
+//     localStorage.setItem("students", JSON.stringify(students.value));
+//     console.log("Deleted student", index);
+//   }
+
+// }
 </script>
 

@@ -5,7 +5,7 @@
             <div @click="onPageChange('students/new')" class="cursor-pointer-page">
                 <DashboardSomneangpleangBox  :title="'Register'" :description="'Register User'" :img="adduserIcon"/>
             </div>
-            <div  class="cursor-pointer-page">
+            <div class="cursor-pointer-page">
                 <DashboardSomneangpleangBox  :title="'Attendance'" :description="'Register User'" :img="attendanceIcon"/>
             </div>
             <div  class="cursor-pointer-page">

@@ -1,7 +1,8 @@
 <template>
     <div class="bg-gray-100 p-24">
+      <div class=" flex items-center justify-center bg-gray-100 pb-5">
         <div class="w-full bg-white rounded-lg shadow-md p-6">
-        <h1 class="text-lg font-semibold mb-4">All Student</h1>
+        <h1 class="text-lg font-semibold mb-4">Teacher Name</h1>
         <hr class="mb-6" />
         <form >
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -9,7 +10,7 @@
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Teacher</label>
                     <input
-                    type="​text"
+                    type="text"
                     id="name"
                     
                     placeholder="Enter name"
@@ -20,11 +21,17 @@
                 <!-- Gender -->
                 <div>
                     <label for="gender" class="block text-sm font-medium text-gray-700 mb-1">Class</label>
-                    <input
-                      type="date"
-                      id="date-register"
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
+                    <select
+                    id="gender"
+                    
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                    <option value="" disabled>Guitar</option>
+                    <option value="Male">Piano</option>
+                    <option value="Female">Dance</option>
+                    <option value="Other">Ukulele</option>
+                    <option value="Other">Drum</option>
+                    </select>
                 </div>
                 <div class="flex justify-end w-40">
                     <button
@@ -38,7 +45,10 @@
             </div>
         </form>
         </div>
+        </div>
+      
       <div class="w-full bg-white rounded-lg shadow-md p-6">
+        <h1 class="text-2xl font-semibold mb-4">Searching for: <span></span></h1>
         <div class="overflow-x-auto">
           <table class="table-auto w-full border-collapse border border-gray-200">
             <!-- Table Header -->
@@ -97,12 +107,7 @@
                 <th
                   class="px-4 py-2 border border-gray-200 text-left text-sm font-medium text-gray-600"
                 >
-                  Renew
-                </th>
-                <th
-                  class="px-4 py-2 border border-gray-200 text-left text-sm font-medium text-gray-600"
-                >
-                  
+                  Status
                 </th>
 
               </tr>
@@ -110,7 +115,7 @@
             <!-- Table Body -->
             <tbody>
               <tr
-                v-for="user in attendent"
+                v-for="user in users"
                 :key="user.id"
                 class="hover:bg-gray-50 transition duration-150"
               >
@@ -127,107 +132,67 @@
                 <td
                   class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
                 >
-                  {{ user.teacher }}
-                </td>
-                <td
-                  class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
-                >
                   {{ user.time }}
                 </td>
                 <td
                   class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
                 >
-                    {{ user.date }}
+                  {{ user.teacher }}
                 </td>
                 <td
                   class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
                 >
-                {{ user.present }}
+                  {{ user.status }}
                 </td>
                 <td
                   class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
                 >
-                {{ user.absent }}
+                
                 </td>
                 <td
                   class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
                 >
-                {{ user.permission }}
-                </td>
-                <td
-                  class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
-                >
-                {{ user.canceled }}
-                </td>
-                <td
-                  class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
-                >
-                  {{ user.session }}<span> / 8</span>
-                </td>
-                <td
-                  class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
-                >
-                  <div v-if="user.session == 8">
-                      <button
-                          type="button"
-                          class="m-1 w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          >
-                          Renew
-                      </button>
-                  </div>
-                  <div v-else>
-                      <button
-                          type="button"
-                          class="m-1 w-full bg-slate-300 text-white p-2 rounded-lg hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          >
-                          Renew
-                      </button>
-                  </div>
-                </td>
-                <td
-                  class="px-4 py-2 border border-gray-200 text-sm text-gray-700"
-                >
-                  More
+                  <!-- <button
+                    class="border border-red-500 text-red-500 hover:bg-red-700 hover:text-white px-2 py-1 rounded ml-4"
+                    @click="deletedStudent(index)"
+                  >
+                    Delete
+                  </button> -->
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div v-if="attendent.length === 0">No students found</div>
+        <div v-if="users.length === 0">No students found</div>
       </div>
     </div>
   </template>
   <script setup>
   import { useRouter } from 'vue-router';
   const router = useRouter();
-
-  const attendent = [
+  const users = [
     {
         id: 2,
-        name: "Emma",
-        teacher : "Tola",
-        time: "4:00-5:00pm",
-        date: "Sat-Sun",
-        present: 6,
-        absent: 1,
-        permission: 1,
-        canceled: 0,
-        session: 7,
-        
-    },
-    {
-        id: 2,
-        name: "Emma",
-        teacher : "Tola",
-        time: "4:00-5:00pm",
-        date: "Sat-Sun",
-        present: 6,
-        absent: 1,
-        permission: 1,
-        canceled: 0,
-        session: 8,
+        name: "Jane Smith",
+        age: 32,
+        gender: "Female",
+        phone: "987-654-3210",
+        registered: "2023-03-15",
+        time: '4:00-5:00pm',
+        teacher: 'Tola',
+        date: 'Mon-Wed'
+    }
+  ]
+  const findTeacher = (find) => {
+    if(teachers.name == find){
         
     }
-  ];
+
+  }
+
+
+
+
+
   </script>
   
