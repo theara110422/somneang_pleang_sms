@@ -7,41 +7,43 @@
       Add Student
     </button>
     <div class="w-full bg-white rounded-lg shadow-md p-6">
+      <!-- {{ enrollments }} -->
       <h1 class="text-2xl font-semibold mb-4">Students List</h1>
-      <div v-if="students.length === 0">No students added</div>
-
-
-      <!-- new Table -->
-      <!-- <div class="overflow-x-auto">
-        <table class="table-auto w-full border-collapse border border-gray-200">
-          <TableHeader :headers="headers" />
-          <tbody>
-            <TableRow
-              v-for="student in students"
-              :key="student.id"
-              :row="student"
-            />
-          </tbody>
-        </table>
-      </div> -->
-      <!-- table primevue -->
       <div class="card">
-        <DataTable :value="students" tableStyle="min-width: 50rem">
+        <DataTable :value="enrollments" tableStyle="min-width: 50rem">
           <Column field="" header="ID">
             <template #body="slotProps">
-              {{slotProps.index + 1}}
+              {{ slotProps.index + 1 }}
+              <!-- {{ slotProps.data.student.user.first_name }} -->
             </template>
           </Column>
-          <Column field="name" header="Student Name"></Column>
-          <Column field="phone" header="Phone Number"></Column>
-          <Column field="dateRegister" header="Date Register"></Column>
-          <Column field="dateRegister" header="Class"></Column>
-          <Column field="dateRegister" header="Teacher Name"></Column>
-          <Column field="dateRegister" header="Start Date"></Column>
-          <Column field="dateRegister" header="End Date"></Column>
-          <Column field="dateRegister" header="Tuition Fee"></Column>
-          <Column field="dateRegister" header="Empress By"></Column>
-          <Column field="dateRegister" header="Action">
+          <Column field="name" header="Student Name">
+            <template #body="slotProps">
+              {{ slotProps.data.student.user.first_name }}
+              {{ slotProps.data.student.user.last_name }}
+            </template>
+          </Column>
+          <Column field="phone" header="Phone Number">
+            <template #body="slotProps">{{
+              slotProps.data.student.user?.phone_number
+            }}</template>
+          </Column>
+          <Column field="dateRegister" header="Date Register">
+            <template #body="slotProps">{{ slotProps.data.dateRegister }}</template>
+          </Column>
+          <Column field="" header="Class">
+            <template #body="slotProps">{{ slotProps.data.class.name }} {{ slotProps.data.class.level }}</template>
+          </Column>
+          <Column field="" header="Teacher Name">
+            <template #body="slotProps">{{ slotProps.data.teacher.name }}</template>
+          </Column>
+          <Column field="" header="Start Date">
+            <template #body="slotProps">{{ slotProps.data.startDate }}</template></Column>
+          <Column field="" header="End Date">
+            <template #body="slotProps">{{ slotProps.data.endDate }}</template></Column>
+          <Column field="" header="Tuition Fee"></Column>
+          <!-- <Column field="" header="Empress By"></Column> -->
+          <Column field="" header="Action">
             <template #body>
               <div>
                 <button
@@ -59,29 +61,7 @@
               </div>
             </template>
           </Column>
-
-
         </DataTable>
-              <!-- Pagination Controls -->
-      <div class="flex justify-center space-x-4 mt-4">
-        <button
-          @click="changePage(currentPage - 1)"
-          :disabled="currentPage <= 1"
-          class="bg-gray-300 px-4 py-2 rounded"
-        >
-          Prev
-        </button>
-        <div class="flex items-center">
-          <span>Page {{ currentPage }} of {{ totalPages }}</span>
-        </div>
-        <button
-          @click="changePage(currentPage + 1)"
-          :disabled="currentPage >= totalPages"
-          class="bg-gray-300 px-4 py-2 rounded"
-        >
-          Next
-        </button>
-      </div>
       </div>
     </div>
   </div>
@@ -91,29 +71,29 @@
 import { useRouter } from "vue-router";
 import { ref, onMounted, computed } from "vue";
 
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
-import ColumnGroup from 'primevue/columngroup';   // optional
-import Row from 'primevue/row';                   // optional
+import DataTable from "primevue/datatable";
+import Column from "primevue/column";
+import ColumnGroup from "primevue/columngroup"; // optional
+import Row from "primevue/row"; // optional
+
 
 const router = useRouter();
 const students = ref([]);
+const enrollments = ref([]);
 const itemsPerPage = 10; // Number of students per page
 const currentPage = ref(1); // Current page number
-const headers = [
-  "ID",
-  "Student Name",
-  "Phone Number",
-  "Date Register",
-  "Teacher Name",
-  "Start Date",
-  "End Date",
-  "Class",
-];
-// Calculate total number of pages
-const totalPages = computed(() => {
-  return Math.ceil(students.value.length / itemsPerPage);
-});
+
+
+const fetchDataApi = async () => {
+  try {
+    const data = await useFetch(`http://localhost:3006/api/enrollment`);
+    // students.value = data.data.value;
+    console.log(`This is Data : ${data}`)
+    enrollments.value = data.data.value;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
 
 // Paginated students for the current page
 const paginatedStudents = computed(() => {
@@ -138,22 +118,23 @@ const changePage = (page) => {
   currentPage.value = page;
 };
 
+// Calculate total number of pages
+const totalPages = computed(() => {
+  return Math.ceil(students.value.length / itemsPerPage);
+});
+
 onMounted(() => {
-  const storeStudents = JSON.parse(localStorage.getItem("students"));
-  if (storeStudents) {
-    students.value = storeStudents.sort((a, b) => a.id - b.id);
-  }
+  fetchDataApi();
 });
 </script>
 
 <style>
-.p-datatable-header-cell{
+.p-datatable-header-cell {
   background-color: red;
 
   padding: 10px;
-  
 }
-.p-datatable-tbody-cell{
+.p-datatable-tbody-cell {
   padding: 10px;
 }
 </style>

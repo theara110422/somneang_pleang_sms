@@ -28,5 +28,8 @@ export default defineNuxtConfig({
       setMiddleware(pages)
     }
   },
+  experimental: {
+    renderJsonPayloads: false
+  }
 
 })
